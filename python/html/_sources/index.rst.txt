@@ -1,5 +1,5 @@
 Practical: HDF5 basics
-=====================
+======================
 
 This practical is an introduction to HDF5. It shows how to read existing HDF5 files, and how to create and modify your own files.
 
