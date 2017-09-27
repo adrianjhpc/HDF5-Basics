@@ -99,11 +99,15 @@ An HDF5 file has a container or tree structure, very similar to folders or direc
 
 The leaves of the tree are datasets. A dataset has a header and a data array. The header contains information such as the name of the dataset, the dimensions of the data array, the type of its elements, other annotations and user-defined attributes.
 
-To start with, download :download:`example.h5<_static/example.h5>` to the login node:: 
+To start with, download :download:`example.h5<_static/example.h5>` to the login node:
+
+.. code-block:: console
 
     $ wget https://akrause2014.github.io/HDF5-Basics/c/html/_downloads/example.h5
 
-We can have a look at its contents using 'h5dump'::
+We can have a look at its contents using 'h5dump':
+
+.. code-block:: console
 
     $ h5dump example.h5
     HDF5 "example.h5" {
