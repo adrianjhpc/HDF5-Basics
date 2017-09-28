@@ -48,6 +48,11 @@
 <p>This practical is an introduction to HDF5. It shows how to read existing HDF5 files, and how to create and modify your own files.</p>
 <div class="section" id="before-you-start">
 <h2>Before you start<a class="headerlink" href="#before-you-start" title="Permalink to this headline">¶</a></h2>
+<p>To set up the environment:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">hdf5</span><span class="o">-</span><span class="mf">1.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">patch1</span><span class="o">-</span><span class="n">gcc</span><span class="o">-</span><span class="mf">6.2</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">wtjz5my</span>
+<span class="n">module</span> <span class="n">load</span> <span class="n">anaconda</span>
+</pre></div>
+</div>
 <div class="section" id="running-the-examples">
 <h3>Running the examples<a class="headerlink" href="#running-the-examples" title="Permalink to this headline">¶</a></h3>
 <p>To run a Python example type the following:</p>
@@ -84,23 +89,23 @@
 </pre></div>
 </div>
 <p>We can have a look at its contents using &#8216;h5dump&#8217;:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ h5dump example.h5
-HDF5 &quot;example.h5&quot; {
-GROUP &quot;/&quot; {
-   DATASET &quot;dset&quot; {
-      DATATYPE  H5T_STD_I32LE
-      DATASPACE  SIMPLE { ( 6, 15 ) / ( 6, 15 ) }
-      DATA {
-      (0,0): 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-      (1,0): 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-      (2,0): 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
-      (3,0): 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-      (4,0): 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,
-      (5,0): 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90
-      }
-   }
-}
-}
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> h5dump example.h5
+<span class="go">HDF5 &quot;example.h5&quot; {</span>
+<span class="go">GROUP &quot;/&quot; {</span>
+<span class="go">   DATASET &quot;dset&quot; {</span>
+<span class="go">      DATATYPE  H5T_STD_I32LE</span>
+<span class="go">      DATASPACE  SIMPLE { ( 6, 15 ) / ( 6, 15 ) }</span>
+<span class="go">      DATA {</span>
+<span class="go">      (0,0): 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,</span>
+<span class="go">      (1,0): 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,</span>
+<span class="go">      (2,0): 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,</span>
+<span class="go">      (3,0): 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,</span>
+<span class="go">      (4,0): 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,</span>
+<span class="go">      (5,0): 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90</span>
+<span class="go">      }</span>
+<span class="go">   }</span>
+<span class="go">}</span>
+<span class="go">}</span>
 </pre></div>
 </div>
 <p>This file has one dataset which is located in the root container (GROUP &#8220;/&#8221;) of the file.

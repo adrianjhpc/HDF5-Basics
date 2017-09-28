@@ -9,6 +9,11 @@ Before you start
 .. install HDF5
 .. pip install h5py
 
+To set up the environment::
+
+    module load hdf5-1.10.0-patch1-gcc-6.2.0-wtjz5my
+    module load anaconda
+
 
 Running the examples
 ^^^^^^^^^^^^^^^^^^^^
@@ -53,7 +58,9 @@ To start with, download :download:`example.h5<_static/example.h5>` to your local
 
     $ wget https://akrause2014.github.io/HDF5-Basics/python/html/_downloads/example.h5
 
-We can have a look at its contents using 'h5dump'::
+We can have a look at its contents using 'h5dump':
+
+.. code-block:: console
 
     $ h5dump example.h5
     HDF5 "example.h5" {
