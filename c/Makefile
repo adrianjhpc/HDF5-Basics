@@ -5,7 +5,7 @@
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
-BUILDDIR      = $(HOME)/Teaching/2015/HDF5-tutorial/gh-pages/c
+BUILDDIR      = $(HOME)/Teaching/HDF5-tutorial/gh-pages/c
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)

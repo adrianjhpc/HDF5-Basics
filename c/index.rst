@@ -57,23 +57,27 @@ Compiling the examples
 ..           #include "hdf5.h"
 ..                            ^
 
+To set up the environment use::
+
+    module load hdf5-1.10.0-patch1-gcc-6.2.0-wtjz5my
+
 To compile the examples in this tutorial you use the following::
 
-    h5cc -shlib <input_file.c> [-o <binary>]
+    h5cc <input_file.c> [-o <binary>]
 
 This behaves like cc or mpicc depending on the environment.
 
 For example compile and run as follows::
 
-    h5cc -shlib my_first_hdf5_test.c -o my_first_hdf5_test
+    h5cc my_first_hdf5_test.c -o my_first_hdf5_test
     ./my_first_hdf5_test
 
-.. note:: It is important that you use the parameter `-shlib`.
-
-    If you see this error check that you used `-shlib`::
-
-        gcc: /usr/lib64/libhdf5_hl.a: No such file or directory
-        gcc: /usr/lib64/libhdf5.a: No such file or directory
+.. .. note:: It is important that you use the parameter `-shlib`.
+..
+..     If you see this error check that you used `-shlib`::
+..
+..         gcc: /usr/lib64/libhdf5_hl.a: No such file or directory
+..         gcc: /usr/lib64/libhdf5.a: No such file or directory
 
 
 Viewing the contents of an HDF5 file
