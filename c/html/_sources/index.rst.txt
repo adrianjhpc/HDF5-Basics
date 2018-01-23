@@ -57,10 +57,6 @@ Compiling the examples
 ..           #include "hdf5.h"
 ..                            ^
 
-To set up the environment use::
-
-    module load hdf5-1.10.0-patch1-gcc-6.2.0-wtjz5my
-
 To compile the examples in this tutorial you use the following::
 
     h5cc <input_file.c> [-o <binary>]
