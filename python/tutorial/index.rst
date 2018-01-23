@@ -11,7 +11,6 @@ Before you start
 
 To set up the environment::
 
-    module load hdf5-1.10.0-patch1-gcc-6.2.0-wtjz5my
     module load anaconda
 
 
