@@ -35,32 +35,38 @@
 <p>This practical is an introduction to HDF5. It shows how to read existing HDF5 files, and how to create and modify your own files.</p>
 <div class="section" id="before-you-start">
 <h2>Before you start<a class="headerlink" href="#before-you-start" title="Permalink to this headline">¶</a></h2>
-<p>To set up the environment:</p>
+<p>To set up your environment on Cirrus load the following modules:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">anaconda</span> <span class="n">hdf5parallel</span><span class="o">/</span><span class="mf">1.10</span><span class="o">.</span><span class="mi">1</span><span class="o">-</span><span class="n">gcc6</span><span class="o">-</span><span class="n">mpt214</span>
 </pre></div>
 </div>
+<p>Below are some commands that will be useful during the practical.</p>
 <div class="section" id="running-the-examples">
 <h3>Running the examples<a class="headerlink" href="#running-the-examples" title="Permalink to this headline">¶</a></h3>
 <p>To run a Python example type the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">tutorial</span><span class="o">.</span><span class="n">py</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">&lt;</span><span class="n">PYTHON_SOURCE</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>where ‘tutorial.py’ is the name of your python source.</p>
+<p>where <code class="code docutils literal notranslate"><span class="pre">&lt;PYTHON_SOURCE&gt;</span></code> is the name of your python source file.</p>
 </div>
 <div class="section" id="viewing-the-contents-of-an-hdf5-file">
 <h3>Viewing the contents of an HDF5 file<a class="headerlink" href="#viewing-the-contents-of-an-hdf5-file" title="Permalink to this headline">¶</a></h3>
-<p>The commandline utility ‘h5dump’ allows to view the contents of a data file, like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h5dump</span> <span class="n">SampleFile</span><span class="o">.</span><span class="n">h5</span>
+<p>The commandline utility ‘h5dump’ allows to view the contents of a data file, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h5dump</span> <span class="o">&lt;</span><span class="n">EXAMPLE_FILE</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>For large datasets only the header data can be displayed:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h5dump</span> <span class="o">-</span><span class="n">H</span> <span class="n">SampleFile</span><span class="o">.</span><span class="n">h5</span>
+<p>where you replace <code class="code docutils literal notranslate"><span class="pre">&lt;EXAMPLE_FILE&gt;</span></code> with the name of the HDF5 data file whose contents you wish to view.</p>
+<p>For large datasets, displaying the entire data structure might not be practical.
+You can choose to only display the header data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h5dump</span> <span class="o">-</span><span class="n">H</span> <span class="o">&lt;</span><span class="n">EXAMPLE_FILE</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>There are many more options. See <a class="reference external" href="https://www.hdfgroup.org/HDF5/doc/RM/Tools.html#Tools-Dump">https://www.hdfgroup.org/HDF5/doc/RM/Tools.html#Tools-Dump</a> for reference or display the help message:</p>
+<p>which shows you the group structure and the datasets and their shapes and types but not the actual data.
+(Again, replace <code class="code docutils literal notranslate"><span class="pre">&lt;EXAMPLE_FILE&gt;</span></code> with the name of the HDF5 file you wish to view.)</p>
+<p>There are many more options. See <a class="reference external" href="https://support.hdfgroup.org/HDF5/doc/RM/Tools/h5dump.htm">https://support.hdfgroup.org/HDF5/doc/RM/Tools/h5dump.htm</a> for reference or display the help message:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h5dump</span> <span class="o">--</span><span class="n">help</span>
 </pre></div>
 </div>
+<p>Now we are ready to get started and read and manipulate HDF5 files in Python.</p>
 </div>
 </div>
 <div class="section" id="reading-an-existing-hdf5-file">
@@ -100,14 +106,15 @@ The type of the elements in the array is ‘H5T_STD_I32BE’, i.e. the values ar
 </div>
 <div class="section" id="accessing-the-file">
 <h3>Accessing the file<a class="headerlink" href="#accessing-the-file" title="Permalink to this headline">¶</a></h3>
-<p>Now we’re going to write some code to open the data file and close it again:</p>
+<p>Now we’re going to write some code to open the data file and close it again.
+Copy the following Python code into a file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">h5py</span>
 
 <span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;example.h5&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Opened file&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This opens the file ‘example.h5’ and prints out a message. The options for creating or opening a file are:</p>
+<p>This opens the file <cite>example.h5</cite> and prints out a message. The options for creating or opening a file are:</p>
 <dl class="simple">
 <dt><strong>a</strong>:</dt><dd><p>opens an existing file for reading and writing or creates a new file otherwise. This is the default.</p>
 </dd>
@@ -172,6 +179,13 @@ attributes to groups or datasets.</p>
 <p>Now create the following group structure:</p>
 <img alt="_images/group_structure.png" src="_images/group_structure.png" />
 <p>You can view and check the group structure using h5dump.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you made a mistake and you would like to delete a group, use the Python’s <code class="code docutils literal notranslate"><span class="pre">del</span></code> statement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;Earthquake/Laquila&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="visting-the-group-structure">
 <h3>Visting the group structure<a class="headerlink" href="#visting-the-group-structure" title="Permalink to this headline">¶</a></h3>
