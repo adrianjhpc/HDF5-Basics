@@ -9,36 +9,45 @@ Before you start
 .. install HDF5
 .. pip install h5py
 
-To set up the environment::
+To set up your environment on Cirrus load the following modules::
 
     module load anaconda hdf5parallel/1.10.1-gcc6-mpt214
 
+Below are some commands that will be useful during the practical.
 
 Running the examples
 ^^^^^^^^^^^^^^^^^^^^
 
 To run a Python example type the following::
 
-    python tutorial.py
+    python <PYTHON_SOURCE>
 
-where 'tutorial.py' is the name of your python source.
+where :code:`<PYTHON_SOURCE>` is the name of your python source file.
 
 
 Viewing the contents of an HDF5 file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The commandline utility 'h5dump' allows to view the contents of a data file, like this::
+The commandline utility 'h5dump' allows to view the contents of a data file, for example::
 
-    h5dump SampleFile.h5
+    h5dump <EXAMPLE_FILE>
 
-For large datasets only the header data can be displayed::
+where you replace :code:`<EXAMPLE_FILE>` with the name of the HDF5 data file whose contents you wish to view.
 
-    h5dump -H SampleFile.h5
+For large datasets, displaying the entire data structure might not be practical. 
+You can choose to only display the header data::
 
-There are many more options. See https://www.hdfgroup.org/HDF5/doc/RM/Tools.html#Tools-Dump for reference or display the help message::
+    h5dump -H <EXAMPLE_FILE>
+
+which shows you the group structure and the datasets and their shapes and types but not the actual data.
+(Again, replace :code:`<EXAMPLE_FILE>` with the name of the HDF5 file you wish to view.)
+
+There are many more options. See https://support.hdfgroup.org/HDF5/doc/RM/Tools/h5dump.htm for reference or display the help message::
 
     h5dump --help
 
+
+Now we are ready to get started and read and manipulate HDF5 files in Python.
 
 
 Reading an existing HDF5 file
@@ -86,7 +95,8 @@ The type of the elements in the array is 'H5T_STD_I32BE', i.e. the values are 32
 Accessing the file
 ^^^^^^^^^^^^^^^^^^
 
-Now we’re going to write some code to open the data file and close it again::
+Now we’re going to write some code to open the data file and close it again.
+Copy the following Python code into a file::
 
     import h5py
 
@@ -94,7 +104,7 @@ Now we’re going to write some code to open the data file and close it again::
     print('Opened file')
 
 
-This opens the file ‘example.h5’ and prints out a message. The options for creating or opening a file are:
+This opens the file `example.h5` and prints out a message. The options for creating or opening a file are:
 
 **a**:
     opens an existing file for reading and writing or creates a new file otherwise. This is the default.
@@ -165,6 +175,12 @@ Now create the following group structure:
 .. image:: _static/group_structure.png
 
 You can view and check the group structure using h5dump.
+
+.. note::
+
+    If you made a mistake and you would like to delete a group, use the Python's :code:`del` statement::
+
+        del f['Earthquake/Laquila']
 
 
 Visting the group structure
