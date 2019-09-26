@@ -11,7 +11,7 @@ Before you start
 
 To set up the environment::
 
-    module load anaconda
+    module load anaconda hdf5parallel/1.10.1-gcc6-mpt214
 
 
 Running the examples
@@ -213,7 +213,7 @@ Attributes can be attached to HDF5 datasets or groups. An attribute has two part
 Let’s create a string attribute for the root group of our HDF5 file, stating the author::
 
     value = "Amy Krause"
-    attr = f.attrs.create("author", value)
+    f.attrs['author'] = value
 
 The attribute is named ‘author’ and the dataspace and data type are determined by reflection - in this case it is a scalar dataspace (one element) of type String.
 You can also create attributes with values that are arrays.

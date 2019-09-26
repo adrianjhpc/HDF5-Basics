@@ -36,7 +36,7 @@ def print_name(name):
 
 group.visit(print_name)
 
-dataset = f['Earthquake/day2']
+dataset = f['arthquake/Laquila/Traces/day2']
 dataset[1:3, 2:5] = [[0,0,0], [0,0,0]]
 print(dataset[:,:])
 print(dataset[0, [1,3,8]])
