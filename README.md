@@ -9,4 +9,4 @@ This is the master branch with the documentation sources. To compile run:
 
 from the `c` or `python` sub-directory.
 
-The generated documentation pages are hosted on github.io and can be found here: https://akrause2014.github.io/HDF5-Basics/
+The generated documentation pages are hosted on github.io and can be found here: https://adrianjhpc.github.io/HDF5-Basics/

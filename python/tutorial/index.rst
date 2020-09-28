@@ -64,7 +64,7 @@ The leaves of the tree (or "files" if we compare it to a file system) are datase
 
 To start with, download :download:`example.h5<_static/example.h5>` to your local file system::
 
-    $ wget https://akrause2014.github.io/HDF5-Basics/python/html/_downloads/example.h5
+    $ wget https://adrianjhpc.github.io/HDF5-Basics/python/html/_downloads/example.h5
 
 We can have a look at its contents using 'h5dump':
 
