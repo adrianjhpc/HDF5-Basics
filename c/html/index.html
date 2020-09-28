@@ -1,16 +1,13 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>HDF5 Tutorial &#8212; HDF5 Tutorial 1.0 documentation</title>
-    
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
@@ -27,7 +24,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
   </head>
-  <body role="document">
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -63,7 +60,7 @@
 </div>
 <div class="section" id="viewing-the-contents-of-an-hdf5-file">
 <h3>Viewing the contents of an HDF5 file<a class="headerlink" href="#viewing-the-contents-of-an-hdf5-file" title="Permalink to this headline">¶</a></h3>
-<p>The commandline utility &#8216;h5dump&#8217; allows to view the contents of a data file, like this:</p>
+<p>The commandline utility ‘h5dump’ allows to view the contents of a data file, like this:</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">h5dump</span> <span class="n">SampleFile</span><span class="p">.</span><span class="n">h5</span>
 </pre></div>
 </div>
@@ -84,7 +81,7 @@
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> wget https://adrianjhpc.github.io/HDF5-Basics/c/html/_downloads/example.h5
 </pre></div>
 </div>
-<p>We can have a look at its contents using &#8216;h5dump&#8217;:</p>
+<p>We can have a look at its contents using ‘h5dump’:</p>
 <div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> h5dump example.h5
 <span class="go">HDF5 &quot;example.h5&quot; {</span>
 <span class="go">GROUP &quot;/&quot; {</span>
@@ -104,9 +101,9 @@
 <span class="go">}</span>
 </pre></div>
 </div>
-<p>This file has one dataset which is located in the root container (group &#8220;/&#8221;) of the file.
-The dataset is called &#8220;dset&#8221; and contains a &#8216;SIMPLE&#8217; dataspace which is an array - in this case a 2-dimensional array of size (6, 15).
-The type of the elements in the array is &#8216;H5T_STD_I32BE&#8217;, i.e. the values are 32-bit big-endian integers.</p>
+<p>This file has one dataset which is located in the root container (group “/”) of the file.
+The dataset is called “dset” and contains a ‘SIMPLE’ dataspace which is an array - in this case a 2-dimensional array of size (6, 15).
+The type of the elements in the array is ‘H5T_STD_I32BE’, i.e. the values are 32-bit big-endian integers.</p>
 </div>
 <div class="section" id="accessing-the-file">
 <h3>Accessing the file<a class="headerlink" href="#accessing-the-file" title="Permalink to this headline">¶</a></h3>
@@ -139,7 +136,7 @@ The type of the elements in the array is &#8216;H5T_STD_I32BE&#8217;, i.e. the v
 <dd>opens an existing file for reading and writing</dd>
 </dl>
 <p>See <a class="reference external" href="http://www.hdfgroup.org/HDF5/doc/UG/08_TheFile.html">http://www.hdfgroup.org/HDF5/doc/UG/08_TheFile.html</a> for more details.</p>
-<p>To run this example, create a file (for example ‘tutorial.c’) with the C source code above and compile it as explained in the section &#8216;Before you start&#8217;.</p>
+<p>To run this example, create a file (for example ‘tutorial.c’) with the C source code above and compile it as explained in the section ‘Before you start’.</p>
 </div>
 <div class="section" id="reading-data">
 <h3>Reading data<a class="headerlink" href="#reading-data" title="Permalink to this headline">¶</a></h3>
@@ -233,7 +230,7 @@ attributes to groups or datasets.</p>
 <li>Double: H5T_NATIVE_DOUBLE</li>
 </ul>
 </div></blockquote>
-<p>Remember to use dataset_id instead of file_id if you create an attribute for a dataset, or group_id if you&#8217;re attaching an attribute to a group.</p>
+<p>Remember to use dataset_id instead of file_id if you create an attribute for a dataset, or group_id if you’re attaching an attribute to a group.</p>
 </div>
 </div>
 <div class="section" id="modifying-the-hdf5-file-structure">
@@ -242,9 +239,9 @@ attributes to groups or datasets.</p>
 The library allows to modify this structure in the same way as you can modify a file system.</p>
 <div class="section" id="moving-a-dataset">
 <h3>Moving a dataset<a class="headerlink" href="#moving-a-dataset" title="Permalink to this headline">¶</a></h3>
-<p>You can easily move the dataset &#8220;dset&#8221; from the root container into the container &#8220;/Earthquake/Laquila/Traces/&#8221;,
+<p>You can easily move the dataset “dset” from the root container into the container “/Earthquake/Laquila/Traces/”,
 first opening both groups and then moving the dataset from one to the other.
-The following also renames the dataset from &#8220;dset&#8221; to &#8220;day2&#8221;:</p>
+The following also renames the dataset from “dset” to “day2”:</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">file_id</span> <span class="o">=</span> <span class="n">H5Fopen</span><span class="p">(</span><span class="s">&quot;example.h5&quot;</span><span class="p">,</span> <span class="n">H5F_ACC_RDWR</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
 <span class="n">group_id</span> <span class="o">=</span> <span class="n">H5Gopen</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s">&quot;/Earthquake/Laquila/Traces&quot;</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
 
@@ -263,14 +260,14 @@ For example, create a soft link to the dataset created above from within another
 <p>The source name is either an absolute path of the source of the link, or it a relative path within group <cite>group_id</cite>.
 The target is resolved at runtime and is a name of an object in the group <cite>group_id</cite>.</p>
 <p>The link command is very similar to moving files above, but note that in the command for creating a soft link,
-the source and target names can&#8217;t be relative paths to different groups.</p>
+the source and target names can’t be relative paths to different groups.</p>
 </div>
 <div class="section" id="external-links">
 <h3>External links<a class="headerlink" href="#external-links" title="Permalink to this headline">¶</a></h3>
 <p>External links are links from an HDF5 file to an object in another HDF5 file.
 Once created the external object behaves like it is part of the file.</p>
 <p>Download the dataset <a class="reference download internal" href="_downloads/NapaValley.h5" download=""><code class="xref download docutils literal"><span class="pre">NapaValley.h5</span></code></a>.
-Then link a group &#8216;Earthquake/NapaValley/&#8217; in your file to the group &#8216;Traces&#8217; in the external file:</p>
+Then link a group ‘Earthquake/NapaValley/’ in your file to the group ‘Traces’ in the external file:</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">H5Lcreate_external</span><span class="p">(</span><span class="s">&quot;NapaValley.h5&quot;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">TARGET_GROUP</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">SOURCE_GROUP</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -309,7 +306,7 @@ and creating unions of selections.</p>
 </div>
 <div class="section" id="selecting-a-hyperslab">
 <h3>Selecting a hyperslab<a class="headerlink" href="#selecting-a-hyperslab" title="Permalink to this headline">¶</a></h3>
-<p>In the following example, you&#8217;re going to select and modify a hyperslab of the dataset you created above.</p>
+<p>In the following example, you’re going to select and modify a hyperslab of the dataset you created above.</p>
 <p>First create a dataspace of the same dimensions as the target dataset:</p>
 <div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">hsize_t</span> <span class="n">dims</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">DIM0</span><span class="p">,</span> <span class="n">DIM1</span><span class="p">};</span>
 <span class="n">space</span> <span class="o">=</span> <span class="n">H5Screate_simple</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
@@ -441,7 +438,7 @@ and creating unions of selections.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2014, The University of Edinburgh.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
   </body>
 </html>

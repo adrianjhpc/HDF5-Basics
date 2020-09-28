@@ -103,7 +103,7 @@ To start with, download :download:`example.h5<_static/example.h5>` to the login 
 
 .. code-block:: console
 
-    $ wget https://akrause2014.github.io/HDF5-Basics/c/html/_downloads/example.h5
+    $ wget https://adrianjhpc.github.io/HDF5-Basics/c/html/_downloads/example.h5
 
 We can have a look at its contents using 'h5dump':
 

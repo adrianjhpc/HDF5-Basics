@@ -11,7 +11,7 @@ Before you start
 
 To set up your environment on Cirrus load the following modules::
 
-    module load anaconda hdf5parallel/1.10.1-gcc6-mpt214
+    module load anaconda hdf5parallel/1.10.6-intel19-mpt222
 
 Below are some commands that will be useful during the practical.
 
@@ -64,7 +64,7 @@ The leaves of the tree (or "files" if we compare it to a file system) are datase
 
 To start with, download :download:`example.h5<_static/example.h5>` to your local file system::
 
-    $ wget https://akrause2014.github.io/HDF5-Basics/python/html/_downloads/example.h5
+    $ wget https://adrianjhpc.github.io/HDF5-Basics/python/html/_downloads/example.h5
 
 We can have a look at its contents using 'h5dump':
 
