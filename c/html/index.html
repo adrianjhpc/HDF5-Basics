@@ -47,13 +47,22 @@
 <h2>Before you start<a class="headerlink" href="#before-you-start" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="compiling-the-examples">
 <h3>Compiling the examples<a class="headerlink" href="#compiling-the-examples" title="Permalink to this headline">¶</a></h3>
-<p>To compile the examples in this tutorial you use the following:</p>
-<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">h5cc</span> <span class="o">&lt;</span><span class="n">input_file</span><span class="p">.</span><span class="n">c</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="o">&lt;</span><span class="n">binary</span><span class="o">&gt;</span><span class="p">]</span>
+<p>We will use the Cirrus HPC system for this practical. If you do not have access to Cirrus please get in touch with the course organiser or lecturer/demonstrators for this practical.
+Before compiling the examples make sure the HDF5 and Intel compiler modules are loaded:</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">hdf5parallel</span><span class="o">/</span><span class="mf">1.10.6</span><span class="o">-</span><span class="n">intel19</span><span class="o">-</span><span class="n">mpt222</span> <span class="n">intel</span><span class="o">-</span><span class="n">compilers</span><span class="o">-</span><span class="mi">19</span>
 </pre></div>
 </div>
-<p>This behaves like cc or mpicc depending on the environment.</p>
+<p>Because of the configuration we are using on Cirrus you will also need to run this command before you do any of the work described below:</p>
+<blockquote>
+<div>export MPICC_CC = icc</div></blockquote>
+<p>This ensures the correct compiler is selected by the HDF5 compiler wrapper.</p>
+<p>To compile the examples in this tutorial you use the following:</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">h5pcc</span> <span class="o">&lt;</span><span class="n">input_file</span><span class="p">.</span><span class="n">c</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="o">&lt;</span><span class="n">binary</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This behaves like a standard compiler such as icc or mpicc depending on the environment.</p>
 <p>For example compile and run as follows:</p>
-<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">h5cc</span> <span class="n">my_first_hdf5_test</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">o</span> <span class="n">my_first_hdf5_test</span>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">h5pcc</span> <span class="n">my_first_hdf5_test</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">o</span> <span class="n">my_first_hdf5_test</span>
 <span class="p">.</span><span class="o">/</span><span class="n">my_first_hdf5_test</span>
 </pre></div>
 </div>
@@ -437,7 +446,7 @@ and creating unions of selections.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2014, The University of Edinburgh.
+        &#169; Copyright 2020, The University of Edinburgh.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
   </body>

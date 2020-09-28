@@ -39,10 +39,17 @@ Before you start
 Compiling the examples
 ^^^^^^^^^^^^^^^^^^^^^^
 
-.. Before compiling the examples make sure the Cray HDF5 module is loaded::
-..
-..     module load cray-hdf5-parallel
-..
+We will use the Cirrus HPC system for this practical. If you do not have access to Cirrus please get in touch with the course organiser or lecturer/demonstrators for this practical.
+Before compiling the examples make sure the HDF5 and Intel compiler modules are loaded::
+
+     module load hdf5parallel/1.10.6-intel19-mpt222 intel-compilers-19 
+
+Because of the configuration we are using on Cirrus you will also need to run this command before you do any of the work described below:
+
+     export MPICC_CC = icc
+
+This ensures the correct compiler is selected by the HDF5 compiler wrapper.
+     
 .. Then the examples can be compiled with the normal cc compiler wrapper::
 ..
 ..     cc <input_file.c> [-o <binary>]
@@ -59,18 +66,18 @@ Compiling the examples
 
 To compile the examples in this tutorial you use the following::
 
-    h5cc <input_file.c> [-o <binary>]
+    h5pcc <input_file.c> [-o <binary>]
 
-This behaves like cc or mpicc depending on the environment.
+This behaves like a standard compiler such as icc or mpicc depending on the environment.
 
 For example compile and run as follows::
 
-    h5cc my_first_hdf5_test.c -o my_first_hdf5_test
+    h5pcc my_first_hdf5_test.c -o my_first_hdf5_test
     ./my_first_hdf5_test
 
 .. .. note:: It is important that you use the parameter `-shlib`.
 ..
-..     If you see this error check that you used `-shlib`::
+..     IMPORTANT if you see this error check that you used `-shlib`::
 ..
 ..         gcc: /usr/lib64/libhdf5_hl.a: No such file or directory
 ..         gcc: /usr/lib64/libhdf5.a: No such file or directory
