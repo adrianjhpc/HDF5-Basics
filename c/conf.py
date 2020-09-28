@@ -44,7 +44,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'HDF5 Tutorial'
-copyright = u'2014, The University of Edinburgh'
+copyright = u'2020, The University of Edinburgh'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
