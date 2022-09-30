@@ -358,6 +358,7 @@ An HDF5 hyperslab is defined by the parameters:
     * block size
 
 .. image:: _static/hyperslab3.png
+ :width: 287
 
 Selecting a hyperslab
 ^^^^^^^^^^^^^^^^^^^^^

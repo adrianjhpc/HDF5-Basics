@@ -314,6 +314,7 @@ An HDF5 hyperslab is defined by the parameters:
     * block size
 
 .. image:: _static/hyperslab3.png
+  :width: 287
 
 In the following example, select a slice of the dataset you created above, for example::
 
