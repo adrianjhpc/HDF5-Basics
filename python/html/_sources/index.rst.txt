@@ -11,7 +11,7 @@ Before you start
 
 To set up your environment on Cirrus load the following modules::
 
-    module load anaconda hdf5parallel/1.10.6-intel19-mpt222
+    module load anaconda hdf5parallel/1.10.6-intel19-mpt225
 
 Below are some commands that will be useful during the practical.
 

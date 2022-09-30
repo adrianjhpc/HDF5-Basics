@@ -42,7 +42,7 @@ Compiling the examples
 We will use the Cirrus HPC system for this practical. If you do not have access to Cirrus please get in touch with the course organiser or lecturer/demonstrators for this practical.
 Before compiling the examples make sure the HDF5 and Intel compiler modules are loaded::
 
-     module load hdf5parallel/1.10.6-intel19-mpt222 intel-compilers-19 
+     module load hdf5parallel/1.10.6-intel19-mpt225 intel-compilers-19 
 
 Because of the configuration we are using on Cirrus you will also need to run this command before you do any of the work described below:
 
