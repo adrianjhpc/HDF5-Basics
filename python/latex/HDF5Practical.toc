@@ -1,0 +1,22 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Before you start}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Running the examples}{3}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Viewing the contents of an HDF5 file}{3}{section.1.2}%
+\contentsline {chapter}{\numberline {2}Reading an existing HDF5 file}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}View the contents}{5}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Accessing the file}{6}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Reading data}{6}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Creating groups and datasets}{9}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Creating groups}{9}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Visting the group structure}{10}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Creating a new dataset}{11}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Writing to a dataset}{11}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Attributes}{11}{section.3.5}%
+\contentsline {chapter}{\numberline {4}Modifying the HDF5 file structure}{13}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Moving a dataset}{13}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Symbolic links}{13}{section.4.2}%
+\contentsline {section}{\numberline {4.3}External links}{13}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Partial I/O}{15}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Regions and hyperslabs}{15}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Slices}{16}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Advanced indexing}{17}{section.5.3}%

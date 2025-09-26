@@ -1,19 +1,16 @@
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>HDF5 Tutorial &#8212; HDF5 Tutorial 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=601dbdee" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
   </head><body>
@@ -23,7 +20,8 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="#">HDF5 Tutorial 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">HDF5 Tutorial 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">HDF5 Tutorial</a></li> 
       </ul>
     </div>  
 
@@ -32,58 +30,49 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="hdf5-tutorial">
-<h1>HDF5 Tutorial<a class="headerlink" href="#hdf5-tutorial" title="Permalink to this headline">¶</a></h1>
+  <section id="hdf5-tutorial">
+<h1>HDF5 Tutorial<a class="headerlink" href="#hdf5-tutorial" title="Link to this heading">¶</a></h1>
 <p>This tutorial is an introduction to HDF5. It shows how to read existing HDF5 files, and how to create and modify your own files.</p>
-<div class="section" id="before-you-start">
-<h2>Before you start<a class="headerlink" href="#before-you-start" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="compiling-the-examples">
-<h3>Compiling the examples<a class="headerlink" href="#compiling-the-examples" title="Permalink to this headline">¶</a></h3>
-<p>We will use the Cirrus HPC system for this practical. If you do not have access to Cirrus please get in touch with the course organiser or lecturer/demonstrators for this practical.
+<section id="compiling-the-examples">
+<h2>Compiling the examples<a class="headerlink" href="#compiling-the-examples" title="Link to this heading">¶</a></h2>
+<p>We will use the ARCHER2 HPC system for this practical. If you do not have access to Cirrus please get in touch with the course organiser or lecturer/demonstrators for this practical.
 Before compiling the examples make sure the HDF5 and Intel compiler modules are loaded:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">module</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="n">hdf5parallel</span><span class="o">/</span><span class="mf">1.10.6</span><span class="o">-</span><span class="n">intel19</span><span class="o">-</span><span class="n">mpt225</span><span class="w"> </span><span class="n">intel</span><span class="o">-</span><span class="n">compilers</span><span class="mi">-19</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">cray</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">gnu</span>
+<span class="n">module</span> <span class="n">load</span> <span class="n">cray</span><span class="o">-</span><span class="n">hdf5</span><span class="o">-</span><span class="n">parallel</span>
 </pre></div>
 </div>
-<p>Because of the configuration we are using on Cirrus you will also need to run this command before you do any of the work described below:</p>
-<blockquote>
-<div>export MPICC_CC = icc</div></blockquote>
-<p>This ensures the correct compiler is selected by the HDF5 compiler wrapper.</p>
-<p>To compile the examples in this tutorial you use the following:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">h5pcc</span><span class="w"> </span><span class="o">&lt;</span><span class="n">input_file</span><span class="p">.</span><span class="n">c</span><span class="o">&gt;</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="o">&lt;</span><span class="n">binary</span><span class="o">&gt;</span><span class="p">]</span><span class="w"></span>
-</pre></div>
-</div>
-<p>This behaves like a standard compiler such as icc or mpicc depending on the environment.</p>
-<p>For example compile and run as follows:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">h5pcc</span><span class="w"> </span><span class="n">my_first_hdf5_test</span><span class="p">.</span><span class="n">c</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="n">my_first_hdf5_test</span><span class="w"></span>
-<span class="p">.</span><span class="o">/</span><span class="n">my_first_hdf5_test</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="viewing-the-contents-of-an-hdf5-file">
-<h3>Viewing the contents of an HDF5 file<a class="headerlink" href="#viewing-the-contents-of-an-hdf5-file" title="Permalink to this headline">¶</a></h3>
+<dl class="simple">
+<dt>You can compile your HDF5 programs as shown below on ARCHER2 (note, we have not created a file called my_first_hdf5_test.c so the command below will fail if you try it at the moment):</dt><dd><p>cc my_first_hdf5_test.c -o my_first_hdf5_test</p>
+</dd>
+<dt>And run it on the login node like this:</dt><dd><p>./my_first_hdf5_test</p>
+</dd>
+</dl>
+</section>
+<section id="viewing-the-contents-of-an-hdf5-file">
+<h2>Viewing the contents of an HDF5 file<a class="headerlink" href="#viewing-the-contents-of-an-hdf5-file" title="Link to this heading">¶</a></h2>
 <p>The commandline utility ‘h5dump’ allows to view the contents of a data file, like this:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">h5dump</span><span class="w"> </span><span class="n">SampleFile</span><span class="p">.</span><span class="n">h5</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h5dump</span> <span class="n">SampleFile</span><span class="o">.</span><span class="n">h5</span>
 </pre></div>
 </div>
 <p>For large datasets only the header data can be displayed:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">h5dump</span><span class="w"> </span><span class="o">-</span><span class="n">H</span><span class="w"> </span><span class="n">SampleFile</span><span class="p">.</span><span class="n">h5</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h5dump</span> <span class="o">-</span><span class="n">H</span> <span class="n">SampleFile</span><span class="o">.</span><span class="n">h5</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="reading-an-existing-hdf5-file">
-<h2>Reading an existing HDF5 file<a class="headerlink" href="#reading-an-existing-hdf5-file" title="Permalink to this headline">¶</a></h2>
+<section id="reading-an-existing-hdf5-file">
+<h3>Reading an existing HDF5 file<a class="headerlink" href="#reading-an-existing-hdf5-file" title="Link to this heading">¶</a></h3>
 <p>In this section we’re going to read data from an existing HDF5 file.</p>
-<div class="section" id="view-the-contents">
-<h3>View the contents<a class="headerlink" href="#view-the-contents" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="view-the-contents">
+<h2>View the contents<a class="headerlink" href="#view-the-contents" title="Link to this heading">¶</a></h2>
 <p>An HDF5 file has a container or tree structure, very similar to folders or directories in a Linux or Windows file system. The root container is always called “/”, just as in a file system, and containers may contain other containers.</p>
 <p>The leaves of the tree are datasets. A dataset has a header and a data array. The header contains information such as the name of the dataset, the dimensions of the data array, the type of its elements, other annotations and user-defined attributes.</p>
 <p>To start with, download <a class="reference download internal" download="" href="_downloads/12082bdece1d69474739084ce9d2b0b3/example.h5"><code class="xref download docutils literal notranslate"><span class="pre">example.h5</span></code></a> to the login node:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wget https://adrianjhpc.github.io/HDF5-Basics/c/html/_downloads/example.h5
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wget<span class="w"> </span>https://adrianjhpc.github.io/HDF5-Basics/c/html/_downloads/example.h5
 </pre></div>
 </div>
 <p>We can have a look at its contents using ‘h5dump’:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>h5dump example.h5
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>h5dump<span class="w"> </span>example.h5
 <span class="go">HDF5 &quot;example.h5&quot; {</span>
 <span class="go">GROUP &quot;/&quot; {</span>
 <span class="go">   DATASET &quot;dset&quot; {</span>
@@ -105,182 +94,182 @@ Before compiling the examples make sure the HDF5 and Intel compiler modules are 
 <p>This file has one dataset which is located in the root container (group “/”) of the file.
 The dataset is called “dset” and contains a ‘SIMPLE’ dataspace which is an array - in this case a 2-dimensional array of size (6, 15).
 The type of the elements in the array is ‘H5T_STD_I32BE’, i.e. the values are 32-bit big-endian integers.</p>
-</div>
-<div class="section" id="accessing-the-file">
-<h3>Accessing the file<a class="headerlink" href="#accessing-the-file" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="accessing-the-file">
+<h2>Accessing the file<a class="headerlink" href="#accessing-the-file" title="Link to this heading">¶</a></h2>
 <p>Now we’re going to write some C code to open the data file and close it again:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;hdf5.h&quot;</span><span class="cp"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;hdf5.h&quot;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="nb">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
 
-<span class="w">     </span><span class="n">hid_t</span><span class="w"> </span><span class="n">file_id</span><span class="p">;</span><span class="w"></span>
-<span class="w">     </span><span class="n">herr_t</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w"></span>
+     <span class="n">hid_t</span> <span class="n">file_id</span><span class="p">;</span>
+     <span class="n">herr_t</span> <span class="n">status</span><span class="p">;</span>
 
-<span class="w">     </span><span class="n">file_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Fopen</span><span class="p">(</span><span class="s">&quot;example.h5&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">H5F_ACC_RDWR</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">);</span><span class="w"></span>
-<span class="w">     </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Opened file - id: %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">file_id</span><span class="p">);</span><span class="w"></span>
+     <span class="n">file_id</span> <span class="o">=</span> <span class="n">H5Fopen</span><span class="p">(</span><span class="s2">&quot;example.h5&quot;</span><span class="p">,</span> <span class="n">H5F_ACC_RDWR</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
+     <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;Opened file - id: </span><span class="si">%i</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file_id</span><span class="p">);</span>
 
-<span class="w">     </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Fclose</span><span class="p">(</span><span class="n">file_id</span><span class="p">);</span><span class="w"></span>
+     <span class="n">status</span> <span class="o">=</span> <span class="n">H5Fclose</span><span class="p">(</span><span class="n">file_id</span><span class="p">);</span>
 
-<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>This opens the file ‘example.h5’ and prints out a message. The options for creating or opening a file are:</p>
-<dl class="docutils">
-<dt><strong>H5F_ACC_EXCL</strong>:</dt>
-<dd>creates a new file and fails if the file already exists. This is the default.</dd>
-<dt><strong>H5F_ACC_TRUNC</strong>:</dt>
-<dd>creates a new file or opens and overwrites an existing one</dd>
-<dt><strong>H5F_ACC_RDONLY</strong>:</dt>
-<dd>opens an existing file with read-only access</dd>
-<dt><strong>H5F_ACC_RDWR</strong>:</dt>
-<dd>opens an existing file for reading and writing</dd>
+<dl class="simple">
+<dt><strong>H5F_ACC_EXCL</strong>:</dt><dd><p>creates a new file and fails if the file already exists. This is the default.</p>
+</dd>
+<dt><strong>H5F_ACC_TRUNC</strong>:</dt><dd><p>creates a new file or opens and overwrites an existing one</p>
+</dd>
+<dt><strong>H5F_ACC_RDONLY</strong>:</dt><dd><p>opens an existing file with read-only access</p>
+</dd>
+<dt><strong>H5F_ACC_RDWR</strong>:</dt><dd><p>opens an existing file for reading and writing</p>
+</dd>
 </dl>
 <p>See <a class="reference external" href="http://www.hdfgroup.org/HDF5/doc/UG/08_TheFile.html">http://www.hdfgroup.org/HDF5/doc/UG/08_TheFile.html</a> for more details.</p>
 <p>To run this example, create a file (for example ‘tutorial.c’) with the C source code above and compile it as explained in the section ‘Before you start’.</p>
-</div>
-<div class="section" id="reading-data">
-<h3>Reading data<a class="headerlink" href="#reading-data" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="reading-data">
+<h2>Reading data<a class="headerlink" href="#reading-data" title="Link to this heading">¶</a></h2>
 <p>Now modify the above example to read the data. As we have seen from the output of h5dump, there is one dataset called “dset” in the root group “/”. First, we open the dataset whose contents we’re going to read (this assumes that the file ‘file_id’ has been opened already):</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">dataset_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Dopen2</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/dset&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataset_id</span> <span class="o">=</span> <span class="n">H5Dopen2</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s2">&quot;/dset&quot;</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Then create an array that is large enough to hold the dataset from the file:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">dset_data</span><span class="p">[</span><span class="mi">6</span><span class="p">][</span><span class="mi">15</span><span class="p">];</span><span class="w"></span>
-<span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Dread</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">,</span><span class="w"> </span><span class="n">H5T_NATIVE_INT</span><span class="p">,</span><span class="w"> </span><span class="n">H5S_ALL</span><span class="p">,</span><span class="w"> </span><span class="n">H5S_ALL</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">dset_data</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">dset_data</span><span class="p">[</span><span class="mi">6</span><span class="p">][</span><span class="mi">15</span><span class="p">];</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">H5Dread</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">,</span> <span class="n">H5T_NATIVE_INT</span><span class="p">,</span> <span class="n">H5S_ALL</span><span class="p">,</span> <span class="n">H5S_ALL</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">dset_data</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Once the dataset contents have been read you can print them out to the commandline.</p>
-</div>
-</div>
-<div class="section" id="modify-an-hdf5-file">
-<h2>Modify an HDF5 file<a class="headerlink" href="#modify-an-hdf5-file" title="Permalink to this headline">¶</a></h2>
+<section id="modify-an-hdf5-file">
+<h3>Modify an HDF5 file<a class="headerlink" href="#modify-an-hdf5-file" title="Link to this heading">¶</a></h3>
 <p>This section shows how to modify the structure of an HDF5 file, how to create and write datasets, and how to attach
 attributes to groups or datasets.</p>
-<div class="section" id="creating-groups">
-<h3>Creating groups<a class="headerlink" href="#creating-groups" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="creating-groups">
+<h2>Creating groups<a class="headerlink" href="#creating-groups" title="Link to this heading">¶</a></h2>
 <p>The example we’ve been reading has only one group, the root container “/”. Now we’re going to to create a few more groups.</p>
 <p>After opening the file and reading its contents, create a new group:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">group_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Gcreate</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/Earthquake&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">group_id</span> <span class="o">=</span> <span class="n">H5Gcreate</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s2">&quot;/Earthquake&quot;</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Note that groups can be created using absolute paths or relative paths:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">l_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Gcreate</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/Earthquake/Laquila&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l_id</span> <span class="o">=</span> <span class="n">H5Gcreate</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s2">&quot;/Earthquake/Laquila&quot;</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This is the same as:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">l_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Gcreate</span><span class="p">(</span><span class="n">group_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Laquila&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l_id</span> <span class="o">=</span> <span class="n">H5Gcreate</span><span class="p">(</span><span class="n">group_id</span><span class="p">,</span> <span class="s2">&quot;Laquila&quot;</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Now create the following group structure:</p>
 <img alt="_images/group_structure.png" src="_images/group_structure.png" />
-</div>
-<div class="section" id="creating-a-new-dataset">
-<h3>Creating a new dataset<a class="headerlink" href="#creating-a-new-dataset" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="creating-a-new-dataset">
+<h2>Creating a new dataset<a class="headerlink" href="#creating-a-new-dataset" title="Link to this heading">¶</a></h2>
 <p>Now we’re going to add a new dataset in the group “/Earthquake/Laquila/Traces”. A dataset has a name and is characterised by the dataspace (the shape of the array) and the datatype (the layout of the stored elements). For our scenario we are going to create a dataset that contains a 2-dimensional array of integers.</p>
 <p>First we create the dataspace, which is a 2-dimensional array in our scenario. For example to create an array with dimensions (5, 10):</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">hsize_t</span><span class="w"> </span><span class="n">dims</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
-<span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
-<span class="n">dims</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
-<span class="n">dataspace_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Screate_simple</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">dims</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hsize_t</span> <span class="n">dims</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="n">dims</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="n">dataspace_id</span> <span class="o">=</span> <span class="n">H5Screate_simple</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>A SIMPLE dataspace represents a multidimensional array. There are also SCALAR dataspaces (containing just one element) and NULL dataspaces that contain no elements. See <a class="reference external" href="http://www.hdfgroup.org/HDF5/doc/UG/UG_frame12Dataspaces.html">http://www.hdfgroup.org/HDF5/doc/UG/UG_frame12Dataspaces.html</a> for more details.</p>
 <p>Now we can use the new dataspace to create the dataset “day1” within the group “Laquila”:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">dataset_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Dcreate2</span><span class="p">(</span><span class="n">l_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;day1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">H5T_NATIVE_INT</span><span class="p">,</span><span class="w"> </span><span class="n">dataspace_id</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataset_id</span> <span class="o">=</span> <span class="n">H5Dcreate2</span><span class="p">(</span><span class="n">l_id</span><span class="p">,</span> <span class="s2">&quot;day1&quot;</span><span class="p">,</span> <span class="n">H5T_NATIVE_INT</span><span class="p">,</span> <span class="n">dataspace_id</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>There are many predefined datatypes. The native type H5T_NATIVE_INT corresponds to a C int type. For example, on an Intel based PC, this type is the same as H5T_STD_I32LE. See <a class="reference external" href="http://www.hdfgroup.org/HDF5/doc/UG/UG_frame11Datatypes.html">http://www.hdfgroup.org/HDF5/doc/UG/UG_frame11Datatypes.html</a> for more details.</p>
-</div>
-<div class="section" id="writing-to-a-dataset">
-<h3>Writing to a dataset<a class="headerlink" href="#writing-to-a-dataset" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="writing-to-a-dataset">
+<h2>Writing to a dataset<a class="headerlink" href="#writing-to-a-dataset" title="Link to this heading">¶</a></h2>
 <p>Now create an integer array dset_data, with the same dimensions as the dataspace (5, 10), and fill it with some data. Then write its contents to the dataset:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">dset_data</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="mi">10</span><span class="p">];</span><span class="w"></span>
-<span class="n">dset_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">23</span><span class="p">;</span><span class="w"></span>
-<span class="cm">/* add more data (integer values) to the array here */</span><span class="w"></span>
-<span class="p">...</span><span class="w"></span>
-<span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Dwrite</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">,</span><span class="w"> </span><span class="n">H5T_NATIVE_INT</span><span class="p">,</span><span class="w"> </span><span class="n">H5S_ALL</span><span class="p">,</span><span class="w"> </span><span class="n">H5S_ALL</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">dset_data</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">dset_data</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="mi">10</span><span class="p">];</span>
+<span class="n">dset_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+<span class="o">/*</span> <span class="n">add</span> <span class="n">more</span> <span class="n">data</span> <span class="p">(</span><span class="n">integer</span> <span class="n">values</span><span class="p">)</span> <span class="n">to</span> <span class="n">the</span> <span class="n">array</span> <span class="n">here</span> <span class="o">*/</span>
+<span class="o">...</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">H5Dwrite</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">,</span> <span class="n">H5T_NATIVE_INT</span><span class="p">,</span> <span class="n">H5S_ALL</span><span class="p">,</span> <span class="n">H5S_ALL</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">dset_data</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Don’t forget to close the dataset when finished:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Dclose</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">status</span> <span class="o">=</span> <span class="n">H5Dclose</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Try to create more datasets in various groups and write to and read from them. You can always check the contents of your HDF5 file using h5dump.</p>
-</div>
-<div class="section" id="attributes">
-<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h2>
 <p>Attributes can be attached to HDF5 datasets or groups. An attribute has two parts: a name and a value. See <a class="reference external" href="http://www.hdfgroup.org/HDF5/doc/UG/UG_frame13Attributes.html">http://www.hdfgroup.org/HDF5/doc/UG/UG_frame13Attributes.html</a> for more information. Attributes are defined with a dataspace and type in the same way as datasets.</p>
 <p>Let’s create a string attribute for the root group of our HDF5 file, stating the author:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">char</span><span class="w"> </span><span class="n">value</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Amy Krause&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">len_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="n">attr_id</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">H5Screate</span><span class="p">(</span><span class="n">H5S_SCALAR</span><span class="p">);</span><span class="w"></span>
-<span class="n">attr_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Tcopy</span><span class="p">(</span><span class="n">H5T_C_S1</span><span class="p">);</span><span class="w"></span>
-<span class="n">H5Tset_size</span><span class="p">(</span><span class="n">attr_type</span><span class="p">,</span><span class="w"> </span><span class="n">len_value</span><span class="p">);</span><span class="w"></span>
-<span class="n">H5Tset_strpad</span><span class="p">(</span><span class="n">attr_type</span><span class="p">,</span><span class="w"> </span><span class="n">H5T_STR_NULLTERM</span><span class="p">);</span><span class="w"></span>
-<span class="n">attr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Acreate2</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;author&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">attr_type</span><span class="p">,</span><span class="w"> </span><span class="n">attr_id</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">);</span><span class="w"></span>
-<span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Awrite</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span><span class="w"> </span><span class="n">attr_type</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">char</span> <span class="n">value</span><span class="p">[]</span> <span class="o">=</span> <span class="s2">&quot;Adrian Jackson&quot;</span><span class="p">;</span>
+<span class="n">len_value</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+<span class="n">attr_id</span>  <span class="o">=</span> <span class="n">H5Screate</span><span class="p">(</span><span class="n">H5S_SCALAR</span><span class="p">);</span>
+<span class="n">attr_type</span> <span class="o">=</span> <span class="n">H5Tcopy</span><span class="p">(</span><span class="n">H5T_C_S1</span><span class="p">);</span>
+<span class="n">H5Tset_size</span><span class="p">(</span><span class="n">attr_type</span><span class="p">,</span> <span class="n">len_value</span><span class="p">);</span>
+<span class="n">H5Tset_strpad</span><span class="p">(</span><span class="n">attr_type</span><span class="p">,</span> <span class="n">H5T_STR_NULLTERM</span><span class="p">);</span>
+<span class="n">attr</span> <span class="o">=</span> <span class="n">H5Acreate2</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s2">&quot;author&quot;</span><span class="p">,</span> <span class="n">attr_type</span><span class="p">,</span> <span class="n">attr_id</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">H5Awrite</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">attr_type</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The attribute is named ‘author’ and has a scalar dataspace (one element) of type C string. The size is the number of characters in the attribute value (10) plus one for the null terminator.</p>
 <p>Now add an attribute to the dataset that you created above, within group ‘Laquila’, using the same technique, for various types. For example:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Integer: H5T_NATIVE_INT</li>
-<li>Float: H5T_NATIVE_FLOAT</li>
-<li>Double: H5T_NATIVE_DOUBLE</li>
+<li><p>Integer: H5T_NATIVE_INT</p></li>
+<li><p>Float: H5T_NATIVE_FLOAT</p></li>
+<li><p>Double: H5T_NATIVE_DOUBLE</p></li>
 </ul>
 </div></blockquote>
 <p>Remember to use dataset_id instead of file_id if you create an attribute for a dataset, or group_id if you’re attaching an attribute to a group.</p>
-</div>
-</div>
-<div class="section" id="modifying-the-hdf5-file-structure">
-<h2>Modifying the HDF5 file structure<a class="headerlink" href="#modifying-the-hdf5-file-structure" title="Permalink to this headline">¶</a></h2>
+<section id="modifying-the-hdf5-file-structure">
+<h3>Modifying the HDF5 file structure<a class="headerlink" href="#modifying-the-hdf5-file-structure" title="Link to this heading">¶</a></h3>
 <p>An HDF5 file is structured just like a file system, with directories or folders (called containers) and files (called datasets).
 The library allows to modify this structure in the same way as you can modify a file system.</p>
-<div class="section" id="moving-a-dataset">
-<h3>Moving a dataset<a class="headerlink" href="#moving-a-dataset" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="moving-a-dataset">
+<h2>Moving a dataset<a class="headerlink" href="#moving-a-dataset" title="Link to this heading">¶</a></h2>
 <p>You can easily move the dataset “dset” from the root container into the container “/Earthquake/Laquila/Traces/”,
 first opening both groups and then moving the dataset from one to the other.
 The following also renames the dataset from “dset” to “day2”:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">file_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Fopen</span><span class="p">(</span><span class="s">&quot;example.h5&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">H5F_ACC_RDWR</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">);</span><span class="w"></span>
-<span class="n">group_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Gopen</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/Earthquake/Laquila/Traces&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">file_id</span> <span class="o">=</span> <span class="n">H5Fopen</span><span class="p">(</span><span class="s2">&quot;example.h5&quot;</span><span class="p">,</span> <span class="n">H5F_ACC_RDWR</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
+<span class="n">group_id</span> <span class="o">=</span> <span class="n">H5Gopen</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s2">&quot;/Earthquake/Laquila/Traces&quot;</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
 
-<span class="n">H5Lmove</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;dset&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">group_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;day2&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">);</span><span class="w"></span>
+<span class="n">H5Lmove</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s2">&quot;dset&quot;</span><span class="p">,</span> <span class="n">group_id</span><span class="p">,</span> <span class="s2">&quot;day2&quot;</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="symbolic-links">
-<h3>Symbolic links<a class="headerlink" href="#symbolic-links" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="symbolic-links">
+<h2>Symbolic links<a class="headerlink" href="#symbolic-links" title="Link to this heading">¶</a></h2>
 <p>It is also possible to create symbolic links to point to objects in other locations in the HDF5 file structure.
 Linked objects can be groups or datasets.
 For example, create a soft link to the dataset created above from within another group:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">H5Lcreate_soft</span><span class="p">(</span><span class="o">&lt;</span><span class="n">source_name</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">group_id</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;</span><span class="n">target_name</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">H5Lcreate_soft</span><span class="p">(</span><span class="o">&lt;</span><span class="n">source_name</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">group_id</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">target_name</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The source name is either an absolute path of the source of the link, or it a relative path within group <cite>group_id</cite>.
 The target is resolved at runtime and is a name of an object in the group <cite>group_id</cite>.</p>
 <p>The link command is very similar to moving files above, but note that in the command for creating a soft link,
 the source and target names can’t be relative paths to different groups.</p>
-</div>
-<div class="section" id="external-links">
-<h3>External links<a class="headerlink" href="#external-links" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="external-links">
+<h2>External links<a class="headerlink" href="#external-links" title="Link to this heading">¶</a></h2>
 <p>External links are links from an HDF5 file to an object in another HDF5 file.
 Once created the external object behaves like it is part of the file.</p>
 <p>Download the dataset <a class="reference download internal" download="" href="_downloads/498170a66369130f47d345f0480e66a2/NapaValley.h5"><code class="xref download docutils literal notranslate"><span class="pre">NapaValley.h5</span></code></a>.
 Then link a group ‘Earthquake/NapaValley/’ in your file to the group ‘Traces’ in the external file:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">H5Lcreate_external</span><span class="p">(</span><span class="s">&quot;NapaValley.h5&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;</span><span class="n">TARGET_GROUP</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">file_id</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;</span><span class="n">SOURCE_GROUP</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">H5Lcreate_external</span><span class="p">(</span><span class="s2">&quot;NapaValley.h5&quot;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">TARGET_GROUP</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">SOURCE_GROUP</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>In the command above replace <cite>TARGET_GROUP</cite> with the group in the external file and <cite>SOURCE_GROUP</cite>
 with a new group in your file that points to the external group.
 Now you can read this new group as if it was part of the source HDF5 file.</p>
-</div>
-</div>
-<div class="section" id="partial-i-o">
-<h2>Partial I/O<a class="headerlink" href="#partial-i-o" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="regions-and-hyperslabs">
-<h3>Regions and hyperslabs<a class="headerlink" href="#regions-and-hyperslabs" title="Permalink to this headline">¶</a></h3>
+<section id="partial-i-o">
+<h3>Partial I/O<a class="headerlink" href="#partial-i-o" title="Link to this heading">¶</a></h3>
+</section>
+</section>
+<section id="regions-and-hyperslabs">
+<h2>Regions and hyperslabs<a class="headerlink" href="#regions-and-hyperslabs" title="Link to this heading">¶</a></h2>
 <p>As HDF5 is commonly used when writing or reading files in a parallel application,
 it is possible to select certain elements of a dataset rather than the whole array,
 thus allowing to write different portions of a file or dataset from each process.
@@ -297,116 +286,115 @@ and creating unions of selections.</p>
 <p>An HDF5 hyperslab is defined by the parameters:</p>
 <blockquote>
 <div><ul class="simple">
-<li>offset</li>
-<li>stride</li>
-<li>count (the number of blocks)</li>
-<li>block size</li>
+<li><p>offset</p></li>
+<li><p>stride</p></li>
+<li><p>count (the number of blocks)</p></li>
+<li><p>block size</p></li>
 </ul>
 </div></blockquote>
-<a class="reference internal image-reference" href="_images/hyperslab3.png"><img alt="_images/hyperslab3.png" src="_images/hyperslab3.png" style="width: 287px;" /></a>
-</div>
-<div class="section" id="selecting-a-hyperslab">
-<h3>Selecting a hyperslab<a class="headerlink" href="#selecting-a-hyperslab" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/hyperslab3.png" src="_images/hyperslab3.png" />
+</section>
+<section id="selecting-a-hyperslab">
+<h2>Selecting a hyperslab<a class="headerlink" href="#selecting-a-hyperslab" title="Link to this heading">¶</a></h2>
 <p>In the following example, you’re going to select and modify a hyperslab of the dataset you created above.</p>
 <p>First create a dataspace of the same dimensions as the target dataset:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">hsize_t</span><span class="w"> </span><span class="n">dims</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">DIM0</span><span class="p">,</span><span class="w"> </span><span class="n">DIM1</span><span class="p">};</span><span class="w"></span>
-<span class="n">space</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Screate_simple</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">dims</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hsize_t</span> <span class="n">dims</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">DIM0</span><span class="p">,</span> <span class="n">DIM1</span><span class="p">};</span>
+<span class="n">space</span> <span class="o">=</span> <span class="n">H5Screate_simple</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>and create a data array, for example:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">DIM0</span><span class="p">][</span><span class="n">DIM1</span><span class="p">];</span><span class="w"></span>
-<span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">;</span><span class="w"></span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">DIM0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">&lt;</span><span class="n">DIM1</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">data</span><span class="p">[</span><span class="n">DIM0</span><span class="p">][</span><span class="n">DIM1</span><span class="p">];</span>
+<span class="nb">int</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">DIM0</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">DIM1</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Then select a region by defining the start and the number of points to write:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">hsize_t</span><span class="w"> </span><span class="n">start</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">count</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">stride</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">block</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
-<span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
-<span class="n">count</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
-<span class="n">count</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hsize_t</span> <span class="n">start</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">count</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">stride</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">block</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">count</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">count</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 
-<span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Sselect_hyperslab</span><span class="w"> </span><span class="p">(</span><span class="n">space</span><span class="p">,</span><span class="w"> </span><span class="n">H5S_SELECT_SET</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">H5Sselect_hyperslab</span> <span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">H5S_SELECT_SET</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">NULL</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">NULL</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This selects the hyperslab (in this case a rectangle) of size (2,3) located at (1,2) in the array, like this:</p>
 <img alt="_images/hyperslab1.png" src="_images/hyperslab1.png" />
 <p>Now write the data:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Dwrite</span><span class="w"> </span><span class="p">(</span><span class="n">dataset_id</span><span class="p">,</span><span class="w"> </span><span class="n">H5T_NATIVE_INT</span><span class="p">,</span><span class="w"> </span><span class="n">H5S_ALL</span><span class="p">,</span><span class="w"> </span><span class="n">space</span><span class="p">,</span><span class="w"> </span><span class="n">H5P_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">status</span> <span class="o">=</span> <span class="n">H5Dwrite</span> <span class="p">(</span><span class="n">dataset_id</span><span class="p">,</span> <span class="n">H5T_NATIVE_INT</span><span class="p">,</span> <span class="n">H5S_ALL</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">H5P_DEFAULT</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can also change the size of blocks and the stride between the blocks, for example:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
-<span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 
-<span class="n">block</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
-<span class="n">block</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="n">block</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">block</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 
-<span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Sselect_hyperslab</span><span class="w"> </span><span class="p">(</span><span class="n">space</span><span class="p">,</span><span class="w"> </span><span class="n">H5S_SELECT_SET</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">stride</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="n">block</span><span class="p">);</span><span class="w"></span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">H5Sselect_hyperslab</span> <span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">H5S_SELECT_SET</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">block</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Use <cite>h5dump</cite> to check how the dataset looks now. Which elements have been replaced by new ones?</p>
-</div>
-<div class="section" id="selecting-elements">
-<h3>Selecting elements<a class="headerlink" href="#selecting-elements" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="selecting-elements">
+<h2>Selecting elements<a class="headerlink" href="#selecting-elements" title="Link to this heading">¶</a></h2>
 <p>You can also select single elements from a dataset, for example to write a sequence of points:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">coord</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">coord</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="n">coord</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">coord</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
-<span class="n">coord</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">coord</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
-<span class="n">coord</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="n">coord</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">coord</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">coord</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">coord</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">coord</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="n">coord</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">coord</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="n">coord</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="n">coord</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
 
-<span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">H5Sselect_elements</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span><span class="w"> </span><span class="n">H5S_SELECT_SET</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">hssize_t</span><span class="w"> </span><span class="o">**</span><span class="p">)</span><span class="n">coord</span><span class="p">);</span><span class="w"></span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">H5Sselect_elements</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="n">H5S_SELECT_SET</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span><span class="n">const</span> <span class="n">hssize_t</span> <span class="o">**</span><span class="p">)</span><span class="n">coord</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">HDF5 Tutorial</a><ul>
-<li><a class="reference internal" href="#before-you-start">Before you start</a><ul>
 <li><a class="reference internal" href="#compiling-the-examples">Compiling the examples</a></li>
-<li><a class="reference internal" href="#viewing-the-contents-of-an-hdf5-file">Viewing the contents of an HDF5 file</a></li>
+<li><a class="reference internal" href="#viewing-the-contents-of-an-hdf5-file">Viewing the contents of an HDF5 file</a><ul>
+<li><a class="reference internal" href="#reading-an-existing-hdf5-file">Reading an existing HDF5 file</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#reading-an-existing-hdf5-file">Reading an existing HDF5 file</a><ul>
 <li><a class="reference internal" href="#view-the-contents">View the contents</a></li>
 <li><a class="reference internal" href="#accessing-the-file">Accessing the file</a></li>
-<li><a class="reference internal" href="#reading-data">Reading data</a></li>
+<li><a class="reference internal" href="#reading-data">Reading data</a><ul>
+<li><a class="reference internal" href="#modify-an-hdf5-file">Modify an HDF5 file</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#modify-an-hdf5-file">Modify an HDF5 file</a><ul>
 <li><a class="reference internal" href="#creating-groups">Creating groups</a></li>
 <li><a class="reference internal" href="#creating-a-new-dataset">Creating a new dataset</a></li>
 <li><a class="reference internal" href="#writing-to-a-dataset">Writing to a dataset</a></li>
-<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a><ul>
+<li><a class="reference internal" href="#modifying-the-hdf5-file-structure">Modifying the HDF5 file structure</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#modifying-the-hdf5-file-structure">Modifying the HDF5 file structure</a><ul>
 <li><a class="reference internal" href="#moving-a-dataset">Moving a dataset</a></li>
 <li><a class="reference internal" href="#symbolic-links">Symbolic links</a></li>
-<li><a class="reference internal" href="#external-links">External links</a></li>
+<li><a class="reference internal" href="#external-links">External links</a><ul>
+<li><a class="reference internal" href="#partial-i-o">Partial I/O</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#partial-i-o">Partial I/O</a><ul>
 <li><a class="reference internal" href="#regions-and-hyperslabs">Regions and hyperslabs</a></li>
 <li><a class="reference internal" href="#selecting-a-hyperslab">Selecting a hyperslab</a></li>
 <li><a class="reference internal" href="#selecting-elements">Selecting elements</a></li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
 
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -415,17 +403,15 @@ and creating unions of selections.</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -436,12 +422,13 @@ and creating unions of selections.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="#">HDF5 Tutorial 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">HDF5 Tutorial 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">HDF5 Tutorial</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2020, The University of Edinburgh.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    &#169; Copyright 2014, The University of Edinburgh.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

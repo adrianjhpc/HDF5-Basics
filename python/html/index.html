@@ -1,19 +1,16 @@
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Practical: HDF5 basics &#8212; HDF5 Basics 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=601dbdee" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
   </head><body>
@@ -23,7 +20,8 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="#">HDF5 Basics 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">HDF5 Basics 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Practical: HDF5 basics</a></li> 
       </ul>
     </div>  
 
@@ -32,26 +30,29 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="practical-hdf5-basics">
-<h1>Practical: HDF5 basics<a class="headerlink" href="#practical-hdf5-basics" title="Permalink to this headline">¶</a></h1>
+  <section id="practical-hdf5-basics">
+<h1>Practical: HDF5 basics<a class="headerlink" href="#practical-hdf5-basics" title="Link to this heading">¶</a></h1>
 <p>This practical is an introduction to HDF5. It shows how to read existing HDF5 files, and how to create and modify your own files.</p>
-<div class="section" id="before-you-start">
-<h2>Before you start<a class="headerlink" href="#before-you-start" title="Permalink to this headline">¶</a></h2>
-<p>To set up your environment on Cirrus load the following modules:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">anaconda</span> <span class="n">hdf5parallel</span><span class="o">/</span><span class="mf">1.10.6</span><span class="o">-</span><span class="n">intel19</span><span class="o">-</span><span class="n">mpt225</span>
+<section id="before-you-start">
+<h2>Before you start<a class="headerlink" href="#before-you-start" title="Link to this heading">¶</a></h2>
+<p>To set up your environment on ARCHER2 load the following modules:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>module load cray-python cray-hdf5-parallel cray-netcdf-hdf5parallel
+export PYTHONUSERBASE=/work/m25oc/m25oc/$USER/.local
+python3 -m pip install h5py
 </pre></div>
 </div>
+<p>Note, if your user account is not in the m25oc project then the code above will not work, and the PYTHONUSERBASE line will need to be adapted for your specific account. Please ask for help if this is the case.</p>
 <p>Below are some commands that will be useful during the practical.</p>
-<div class="section" id="running-the-examples">
-<h3>Running the examples<a class="headerlink" href="#running-the-examples" title="Permalink to this headline">¶</a></h3>
+<section id="running-the-examples">
+<h3>Running the examples<a class="headerlink" href="#running-the-examples" title="Link to this heading">¶</a></h3>
 <p>To run a Python example type the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">&lt;</span><span class="n">PYTHON_SOURCE</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>where <code class="code docutils literal notranslate"><span class="pre">&lt;PYTHON_SOURCE&gt;</span></code> is the name of your python source file.</p>
-</div>
-<div class="section" id="viewing-the-contents-of-an-hdf5-file">
-<h3>Viewing the contents of an HDF5 file<a class="headerlink" href="#viewing-the-contents-of-an-hdf5-file" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="viewing-the-contents-of-an-hdf5-file">
+<h3>Viewing the contents of an HDF5 file<a class="headerlink" href="#viewing-the-contents-of-an-hdf5-file" title="Link to this heading">¶</a></h3>
 <p>The commandline utility ‘h5dump’ allows to view the contents of a data file, for example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h5dump</span> <span class="o">&lt;</span><span class="n">EXAMPLE_FILE</span><span class="o">&gt;</span>
 </pre></div>
@@ -69,13 +70,13 @@ You can choose to only display the header data:</p>
 </pre></div>
 </div>
 <p>Now we are ready to get started and read and manipulate HDF5 files in Python.</p>
-</div>
-</div>
-<div class="section" id="reading-an-existing-hdf5-file">
-<h2>Reading an existing HDF5 file<a class="headerlink" href="#reading-an-existing-hdf5-file" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="reading-an-existing-hdf5-file">
+<h2>Reading an existing HDF5 file<a class="headerlink" href="#reading-an-existing-hdf5-file" title="Link to this heading">¶</a></h2>
 <p>In this section we’re going to read data from an existing HDF5 file.</p>
-<div class="section" id="view-the-contents">
-<h3>View the contents<a class="headerlink" href="#view-the-contents" title="Permalink to this headline">¶</a></h3>
+<section id="view-the-contents">
+<h3>View the contents<a class="headerlink" href="#view-the-contents" title="Link to this heading">¶</a></h3>
 <p>An HDF5 file has a container or tree structure, very similar to folders or directories in a Linux or Windows file system. The root container is always called “/”, just as in a file system, and containers may contain other containers.</p>
 <p>The leaves of the tree (or “files” if we compare it to a file system) are datasets. A dataset has a header and a data array. The header contains information such as the name of the dataset, the dimensions of the data array, the type of its elements, other annotations and user-defined attributes.</p>
 <p>To start with, download <a class="reference download internal" download="" href="_downloads/12082bdece1d69474739084ce9d2b0b3/example.h5"><code class="xref download docutils literal notranslate"><span class="pre">example.h5</span></code></a> to your local file system:</p>
@@ -83,7 +84,7 @@ You can choose to only display the header data:</p>
 </pre></div>
 </div>
 <p>We can have a look at its contents using ‘h5dump’:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>h5dump example.h5
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>h5dump<span class="w"> </span>example.h5
 <span class="go">HDF5 &quot;example.h5&quot; {</span>
 <span class="go">GROUP &quot;/&quot; {</span>
 <span class="go">   DATASET &quot;dset&quot; {</span>
@@ -105,9 +106,9 @@ You can choose to only display the header data:</p>
 <p>This file has one dataset which is located in the root container (GROUP “/”) of the file.
 The dataset is called “dset” and contains a ‘SIMPLE’ dataspace which is an array - in this case a 2-dimensional array of size (6, 15).
 The type of the elements in the array is ‘H5T_STD_I32BE’, i.e. the values are 32-bit big-endian integers.</p>
-</div>
-<div class="section" id="accessing-the-file">
-<h3>Accessing the file<a class="headerlink" href="#accessing-the-file" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="accessing-the-file">
+<h3>Accessing the file<a class="headerlink" href="#accessing-the-file" title="Link to this heading">¶</a></h3>
 <p>Now we’re going to write some code to open the data file and close it again.
 Copy the following Python code into a file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">h5py</span>
@@ -117,23 +118,23 @@ Copy the following Python code into a file:</p>
 </pre></div>
 </div>
 <p>This opens the file <cite>example.h5</cite> and prints out a message. The options for creating or opening a file are:</p>
-<dl class="docutils">
-<dt><strong>a</strong>:</dt>
-<dd>opens an existing file for reading and writing or creates a new file otherwise. This is the default.</dd>
-<dt><strong>w</strong>:</dt>
-<dd>creates a new file or opens and overwrites an existing one</dd>
-<dt><strong>r</strong>:</dt>
-<dd>opens an existing file with read-only access</dd>
-<dt><strong>r+</strong>:</dt>
-<dd>opens an existing file for reading and writing</dd>
-<dt><strong>w-/x</strong>:</dt>
-<dd>creates a new file and fails if the file already exists</dd>
+<dl class="simple">
+<dt><strong>a</strong>:</dt><dd><p>opens an existing file for reading and writing or creates a new file otherwise. This is the default.</p>
+</dd>
+<dt><strong>w</strong>:</dt><dd><p>creates a new file or opens and overwrites an existing one</p>
+</dd>
+<dt><strong>r</strong>:</dt><dd><p>opens an existing file with read-only access</p>
+</dd>
+<dt><strong>r+</strong>:</dt><dd><p>opens an existing file for reading and writing</p>
+</dd>
+<dt><strong>w-/x</strong>:</dt><dd><p>creates a new file and fails if the file already exists</p>
+</dd>
 </dl>
 <p>See <a class="reference external" href="http://docs.h5py.org/en/latest/high/file.html">http://docs.h5py.org/en/latest/high/file.html</a> for more details.</p>
 <p>To execute this example, create a file (for example ‘tutorial.py’) with the source code above and run it as explained in the section ‘Before you start’.</p>
-</div>
-<div class="section" id="reading-data">
-<h3>Reading data<a class="headerlink" href="#reading-data" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="reading-data">
+<h3>Reading data<a class="headerlink" href="#reading-data" title="Link to this heading">¶</a></h3>
 <p>Now modify the above example to read the data. As we have seen from the output of h5dump, there is one dataset called “dset” in the root group “/”. To read it we assign the dataset to a variable (this assumes that the file ‘f’ has been opened already):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;dset&#39;</span><span class="p">]</span>
 </pre></div>
@@ -144,12 +145,12 @@ Copy the following Python code into a file:</p>
 </div>
 <p>Here are a few more examples:</p>
 <ul>
-<li><p class="first">the first row (row 0):</p>
+<li><p>the first row (row 0):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">][:]</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">the column at position 3:</p>
+<li><p>the column at position 3:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -157,14 +158,14 @@ Copy the following Python code into a file:</p>
 </ul>
 <p>See <a class="reference external" href="http://docs.h5py.org/en/latest/high/dataset.html#reading-writing-data">http://docs.h5py.org/en/latest/high/dataset.html#reading-writing-data</a> for more details.</p>
 <p>In our example (reading the h5dump output above) we know that the dataset has size (6, 15). Now can print out all the contents of the dataset to the command line, for example by iterating over the two dimensions in a nested loop or by printing each row.</p>
-</div>
-</div>
-<div class="section" id="creating-groups-and-datasets">
-<h2>Creating groups and datasets<a class="headerlink" href="#creating-groups-and-datasets" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="creating-groups-and-datasets">
+<h2>Creating groups and datasets<a class="headerlink" href="#creating-groups-and-datasets" title="Link to this heading">¶</a></h2>
 <p>This section shows how to modify the structure of an HDF5 file, how to create and write datasets, and how to attach
 attributes to groups or datasets.</p>
-<div class="section" id="creating-groups">
-<h3>Creating groups<a class="headerlink" href="#creating-groups" title="Permalink to this headline">¶</a></h3>
+<section id="creating-groups">
+<h3>Creating groups<a class="headerlink" href="#creating-groups" title="Link to this heading">¶</a></h3>
 <p>As we’ve seen above, the example we were reading has only one group, the root container “/”. Now we’re going to to create a few more groups.</p>
 <p>After opening the file and reading its contents, this is how you create a new group named ‘Earthquake’:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">group</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s2">&quot;Earthquake&quot;</span><span class="p">)</span>
@@ -182,15 +183,15 @@ attributes to groups or datasets.</p>
 <img alt="_images/group_structure.png" src="_images/group_structure.png" />
 <p>You can view and check the group structure using h5dump.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>If you made a mistake and you would like to delete a group, use the Python’s <code class="code docutils literal notranslate"><span class="pre">del</span></code> statement:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;Earthquake/Laquila&#39;</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;Earthquake/Laquila&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="visting-the-group-structure">
-<h3>Visting the group structure<a class="headerlink" href="#visting-the-group-structure" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="visting-the-group-structure">
+<h3>Visting the group structure<a class="headerlink" href="#visting-the-group-structure" title="Link to this heading">¶</a></h3>
 <p>We can also view the group structure by defining a function to recursively visit all objects in a group. For example to print the name of each group:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
@@ -199,9 +200,9 @@ attributes to groups or datasets.</p>
 </pre></div>
 </div>
 <p>If the visit function returns any other value than None the recursion will stop. Now write a function that finds the group called “Laquila” or returns None if there is no such group.</p>
-</div>
-<div class="section" id="creating-a-new-dataset">
-<h3>Creating a new dataset<a class="headerlink" href="#creating-a-new-dataset" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="creating-a-new-dataset">
+<h3>Creating a new dataset<a class="headerlink" href="#creating-a-new-dataset" title="Link to this heading">¶</a></h3>
 <p>Now we’re going to add a new dataset in the group “/Earthquake/Laquila/Traces”.
 A dataset has a name and is characterised by its size, its shape (the shape of the array) and the datatype (the type of the stored elements).
 For our scenario we are going to create a dataset that contains a 2-dimensional array of integers.</p>
@@ -210,9 +211,9 @@ For our scenario we are going to create a dataset that contains a 2-dimensional 
 </pre></div>
 </div>
 <p>There are many predefined datatypes. The native type ‘i’ corresponds to a C int type. For example, on an Intel based PC, this type is the same as H5T_STD_I32LE.</p>
-</div>
-<div class="section" id="writing-to-a-dataset">
-<h3>Writing to a dataset<a class="headerlink" href="#writing-to-a-dataset" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="writing-to-a-dataset">
+<h3>Writing to a dataset<a class="headerlink" href="#writing-to-a-dataset" title="Link to this heading">¶</a></h3>
 <p>Now you can fill the dataset with some data:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">23</span>
 <span class="o">/*</span> <span class="n">add</span> <span class="n">more</span> <span class="n">data</span> <span class="p">(</span><span class="n">integer</span> <span class="n">values</span><span class="p">)</span> <span class="n">to</span> <span class="n">the</span> <span class="n">array</span> <span class="n">here</span> <span class="o">*/</span>
@@ -220,12 +221,12 @@ For our scenario we are going to create a dataset that contains a 2-dimensional 
 </pre></div>
 </div>
 <p>Try to create more datasets in various groups and write to and read from them. You can always check the contents of your HDF5 file using h5dump.</p>
-</div>
-<div class="section" id="attributes">
-<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h3>
 <p>Attributes can be attached to HDF5 datasets or groups. An attribute has two parts: a name and a value. See <a class="reference external" href="http://docs.h5py.org/en/latest/high/attr.html">http://docs.h5py.org/en/latest/high/attr.html</a> for more information. Attributes are defined with a dataspace and type in the same way as datasets.</p>
 <p>Let’s create a string attribute for the root group of our HDF5 file, stating the author:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Amy Krause&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Adrian Jackson&quot;</span>
 <span class="n">f</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;author&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 </pre></div>
 </div>
@@ -233,14 +234,14 @@ For our scenario we are going to create a dataset that contains a 2-dimensional 
 You can also create attributes with values that are arrays.</p>
 <p>Now add an attribute to the dataset that you created above, within group ‘Laquila’, using the same technique, to attach a timestamp to your dataset.
 Remember to use dataset object instead of the file object if you create an attribute for a dataset, or the group object if you’re attaching an attribute to a group.</p>
-</div>
-</div>
-<div class="section" id="modifying-the-hdf5-file-structure">
-<h2>Modifying the HDF5 file structure<a class="headerlink" href="#modifying-the-hdf5-file-structure" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="modifying-the-hdf5-file-structure">
+<h2>Modifying the HDF5 file structure<a class="headerlink" href="#modifying-the-hdf5-file-structure" title="Link to this heading">¶</a></h2>
 <p>An HDF5 file is structured just like a file system, with directories or folders (called containers) and files (called datasets).
 The library allows to modify this structure in the same way as you can modify a file system.</p>
-<div class="section" id="moving-a-dataset">
-<h3>Moving a dataset<a class="headerlink" href="#moving-a-dataset" title="Permalink to this headline">¶</a></h3>
+<section id="moving-a-dataset">
+<h3>Moving a dataset<a class="headerlink" href="#moving-a-dataset" title="Link to this heading">¶</a></h3>
 <p>You can easily move the dataset “dset” from the root container into the container “/Earthquake/Laquila/Traces/” by calling move on a group or a file, using absolute paths or relative paths.
 The following also renames the dataset from “dset” to “day2”:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;example.h5&#39;</span><span class="p">)</span>
@@ -250,9 +251,9 @@ The following also renames the dataset from “dset” to “day2”:</p>
 <span class="n">group</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="s2">&quot;dset&quot;</span><span class="p">,</span> <span class="s2">&quot;day2&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="symbolic-links">
-<h3>Symbolic links<a class="headerlink" href="#symbolic-links" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="symbolic-links">
+<h3>Symbolic links<a class="headerlink" href="#symbolic-links" title="Link to this heading">¶</a></h3>
 <p>It is also possible to create symbolic links to point to objects in other locations in the HDF5 file structure.
 Linked objects can be groups or datasets.
 For example, create a soft link to the dataset created above from within another group:</p>
@@ -260,9 +261,9 @@ For example, create a soft link to the dataset created above from within another
 </pre></div>
 </div>
 <p>The source name is either an absolute path of the source of the link, or it a relative path within a group. Now create a symbolic link to the dataset “Earthquake/Traces/dset” from some other location within the file structure.</p>
-</div>
-<div class="section" id="external-links">
-<h3>External links<a class="headerlink" href="#external-links" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="external-links">
+<h3>External links<a class="headerlink" href="#external-links" title="Link to this heading">¶</a></h3>
 <p>External links are links from an HDF5 file to an object in another HDF5 file.
 Once created the external object behaves like it is part of the file.</p>
 <p>Download the dataset <a class="reference download internal" download="" href="_downloads/498170a66369130f47d345f0480e66a2/NapaValley.h5"><code class="xref download docutils literal notranslate"><span class="pre">NapaValley.h5</span></code></a>.
@@ -273,12 +274,12 @@ Then link a group ‘Earthquake/NapaValley/’ in your file to the group ‘Trac
 <p>In the command above replace <cite>TARGET_GROUP</cite> with the group in the external file and <cite>SOURCE_GROUP</cite>
 with a new group in your file that points to the external group.
 Now you can read this new group as if it was part of the source HDF5 file.</p>
-</div>
-</div>
-<div class="section" id="partial-i-o">
-<h2>Partial I/O<a class="headerlink" href="#partial-i-o" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="regions-and-hyperslabs">
-<h3>Regions and hyperslabs<a class="headerlink" href="#regions-and-hyperslabs" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="partial-i-o">
+<h2>Partial I/O<a class="headerlink" href="#partial-i-o" title="Link to this heading">¶</a></h2>
+<section id="regions-and-hyperslabs">
+<h3>Regions and hyperslabs<a class="headerlink" href="#regions-and-hyperslabs" title="Link to this heading">¶</a></h3>
 <p>As HDF5 is commonly used when writing or reading files in a parallel application,
 it is possible to select certain elements of a dataset rather than the whole array,
 thus allowing to write different portions of a file or dataset from each process.
@@ -296,13 +297,13 @@ for reference.</p>
 <p>An HDF5 hyperslab is defined by the parameters:</p>
 <blockquote>
 <div><ul class="simple">
-<li>offset</li>
-<li>stride</li>
-<li>count (the number of blocks)</li>
-<li>block size</li>
+<li><p>offset</p></li>
+<li><p>stride</p></li>
+<li><p>count (the number of blocks)</p></li>
+<li><p>block size</p></li>
 </ul>
 </div></blockquote>
-<a class="reference internal image-reference" href="_images/hyperslab3.png"><img alt="_images/hyperslab3.png" src="_images/hyperslab3.png" style="width: 287px;" /></a>
+<img alt="_images/hyperslab3.png" src="_images/hyperslab3.png" />
 <p>In the following example, select a slice of the dataset you created above, for example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
@@ -319,9 +320,9 @@ for reference.</p>
 </div>
 <p>Remember that the array that you’re writing must be the same size as the region that you select!</p>
 <p>Use <cite>h5dump</cite> to check how the dataset looks now. Which elements have been replaced by new ones?</p>
-</div>
-<div class="section" id="slices">
-<h3>Slices<a class="headerlink" href="#slices" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="slices">
+<h3>Slices<a class="headerlink" href="#slices" title="Link to this heading">¶</a></h3>
 <p>You can read or write a whole column or row of a dataset by selecting a slice using the notation “:”. The example below selects the first row of our dataset:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span>
 </pre></div>
@@ -336,9 +337,9 @@ for reference.</p>
 </div>
 <p>The above selects the first 4 rows of the dataset.</p>
 <p>Try reading and writing a few more slices and hyperslabs of the dataset and check with <cite>h5dump</cite> how it behaves.</p>
-</div>
-<div class="section" id="advanced-indexing">
-<h3>Advanced indexing<a class="headerlink" href="#advanced-indexing" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="advanced-indexing">
+<h3>Advanced indexing<a class="headerlink" href="#advanced-indexing" title="Link to this heading">¶</a></h3>
 <p>You can also select single elements from a dataset, for example to write a sequence of points:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 </pre></div>
@@ -349,18 +350,20 @@ for reference.</p>
 </pre></div>
 </div>
 <p>What are the shapes of the resulting arrays in the above examples? Now select the subarray of rows 0, 2 and 5 and all columns except the first and the last. What is the correct indexing expression for this?</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Practical: HDF5 basics</a><ul>
 <li><a class="reference internal" href="#before-you-start">Before you start</a><ul>
 <li><a class="reference internal" href="#running-the-examples">Running the examples</a></li>
@@ -397,6 +400,7 @@ for reference.</p>
 </li>
 </ul>
 
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -405,17 +409,15 @@ for reference.</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -426,12 +428,13 @@ for reference.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="#">HDF5 Basics 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">HDF5 Basics 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Practical: HDF5 basics</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2020, The University of Edinburgh.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    &#169; Copyright 2015, The University of Edinburgh.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>
