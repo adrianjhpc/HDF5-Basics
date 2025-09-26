@@ -6,12 +6,13 @@ This practical is an introduction to HDF5. It shows how to read existing HDF5 fi
 Before you start
 ----------------
 
-.. install HDF5
-.. pip install h5py
+To set up your environment on ARCHER2 load the following modules and run the following commands. Note, if your ARCHER2 user account is not in the m25oc project you will need to update the PYTHONUSERBASE line below to change the m25oc part. Please ask for help if you do not know how to do this.. ::
 
-To set up your environment on Cirrus load the following modules::
+module load cray-python cray-hdf5-parallel cray-netcdf-hdf5parallel
+export PYTHONUSERBASE=/work/m25oc/m25oc/$USER/.local
+python3 -m pip install h5py
 
-    module load anaconda hdf5parallel/1.10.6-intel19-mpt225
+
 
 Below are some commands that will be useful during the practical.
 
@@ -228,7 +229,7 @@ Attributes can be attached to HDF5 datasets or groups. An attribute has two part
 
 Let’s create a string attribute for the root group of our HDF5 file, stating the author::
 
-    value = "Amy Krause"
+    value = "Adrian Jackson"
     f.attrs['author'] = value
 
 The attribute is named ‘author’ and the dataspace and data type are determined by reflection - in this case it is a scalar dataspace (one element) of type String.

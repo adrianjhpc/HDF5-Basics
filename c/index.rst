@@ -3,52 +3,15 @@ HDF5 Tutorial
 
 This tutorial is an introduction to HDF5. It shows how to read existing HDF5 files, and how to create and modify your own files.
 
-Before you start
-----------------
-
-.. Downloading the binary distribution
-.. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-..
-.. Download HDF5 from here: http://www.hdfgroup.org/ftp/HDF5/current/bin/linux-x86_64/hdf5-1.8.13-linux-x86_64-shared.tar.gz and unpack the distribution::
-..
-..     $ tar xzf hdf5-1.8.13-linux-x86_64-shared.tar.gz
-..
-.. Now modify the prefix path in `bin/h5cc`. Change the line with the prefix::
-..
-..     ############################################################################
-..     ##                                                                        ##
-..     ## Things You May Have to Modify:                                         ##
-..     ##                                                                        ##
-..     ## If the following paths don't point to the place were HDF5 is installed ##
-..     ## on your system (i.e., you received a binary distribution or moved the  ##
-..     ## files from the originally installed directory to another directory)    ##
-..     ## then modify them accordingly to represent the new paths.               ##
-..     ##                                                                        ##
-..     ############################################################################
-..     prefix="/mnt/scr1/pre-release/hdf5/v1813/thg-builds/koala"
-..
-.. To the location where you unpacked the binary distribution, for example::
-..
-..     prefix="$HOME/hdf5-1.8.13-linux-x86_64-shared"
-..
-.. Now add the binary to your path::
-..
-..     export PATH=$HOME/hdf5-1.8.13-linux-x86_64-shared/bin:$PATH
-
-
 Compiling the examples
 ^^^^^^^^^^^^^^^^^^^^^^
 
-We will use the Cirrus HPC system for this practical. If you do not have access to Cirrus please get in touch with the course organiser or lecturer/demonstrators for this practical.
-Before compiling the examples make sure the HDF5 and Intel compiler modules are loaded::
+We will use the ARCHER2 HPC system for this practical. If you do not have access to ARCHER2 please get in touch with the course organiser or lecturer/demonstrators for this practical.
+Before compiling the examples make sure the HDF5 and GNU compiler modules are loaded::
 
-     module load hdf5parallel/1.10.6-intel19-mpt225 intel-compilers-19 
+  module swap PrgEnv-cray PrgEnv-gnu
+  module load cray-hdf5-parallel
 
-Because of the configuration we are using on Cirrus you will also need to run this command before you do any of the work described below:
-
-     export MPICC_CC = icc
-
-This ensures the correct compiler is selected by the HDF5 compiler wrapper.
      
 .. Then the examples can be compiled with the normal cc compiler wrapper::
 ..
@@ -58,7 +21,6 @@ This ensures the correct compiler is selected by the HDF5 compiler wrapper.
 ..
 ..     Otherwise you will see this error::
 ..
-..         CC-5 craycc: ERROR File = test.c, Line = 1
 ..           The source file "hdf5.h" is unavailable.
 ..
 ..           #include "hdf5.h"
@@ -66,21 +28,13 @@ This ensures the correct compiler is selected by the HDF5 compiler wrapper.
 
 To compile the examples in this tutorial you use the following::
 
-    h5pcc <input_file.c> [-o <binary>]
+    cc <input_file.c> [-o <binary>]
 
-This behaves like a standard compiler such as icc or mpicc depending on the environment.
 
 For example compile and run as follows::
 
-    h5pcc my_first_hdf5_test.c -o my_first_hdf5_test
+    cc my_first_hdf5_test.c -o my_first_hdf5_test
     ./my_first_hdf5_test
-
-.. .. note:: It is important that you use the parameter `-shlib`.
-..
-..     IMPORTANT if you see this error check that you used `-shlib`::
-..
-..         gcc: /usr/lib64/libhdf5_hl.a: No such file or directory
-..         gcc: /usr/lib64/libhdf5.a: No such file or directory
 
 
 Viewing the contents of an HDF5 file
@@ -259,7 +213,7 @@ Attributes can be attached to HDF5 datasets or groups. An attribute has two part
 
 Let’s create a string attribute for the root group of our HDF5 file, stating the author::
 
-    char value[] = "Amy Krause";
+    char value[] = "Adrian Jackson";
     len_value = strlen(value)+1;
     attr_id  = H5Screate(H5S_SCALAR);
     attr_type = H5Tcopy(H5T_C_S1);
